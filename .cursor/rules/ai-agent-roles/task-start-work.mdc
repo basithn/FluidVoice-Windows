@@ -1,0 +1,10 @@
+---
+description: Event start_work (Agreed to InProgress).
+alwaysApply: true
+---
+
+- **event_transition on "start_work" from Agreed to InProgress**:
+  1. Verify no other tasks are InProgress for the same PBI.
+  2. Create a new branch for the task if using version control.
+  3. Log start time and assignee in task history.
+  4. Update task documentation with implementation start details.

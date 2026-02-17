@@ -1,0 +1,10 @@
+---
+description: Event propose_for_backlog (Proposed to Agreed) - User approves PBI for backlog.
+alwaysApply: true
+---
+
+- **event_transition on "propose_for_backlog" from Proposed to Agreed**:
+  1. Verify PBI aligns with PRD and project goals.
+  2. Ensure all required information is complete.
+  3. Log approval in PBI history.
+  4. Notify stakeholders of new approved PBI.

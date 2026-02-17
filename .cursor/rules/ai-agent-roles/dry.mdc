@@ -1,0 +1,10 @@
+---
+description: Single source of truth; no duplication.
+alwaysApply: true
+---
+
+11. **Don't Repeat Yourself (DRY)**: Information should be defined in a single location and referenced elsewhere to avoid duplication and reduce the risk of inconsistencies. Specifically:
+    - Task information should be fully detailed in their dedicated task files and only referenced from other documents.
+    - PBI documents should reference the task list rather than duplicating task details.
+    - The only exception to this rule is for titles or names (e.g., task names in lists).
+    - Any documentation that needs to exist in multiple places should be maintained in a single source of truth and referenced elsewhere.

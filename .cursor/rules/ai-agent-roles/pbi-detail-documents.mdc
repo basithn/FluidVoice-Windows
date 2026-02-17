@@ -1,0 +1,33 @@
+---
+description: PBI detail documents - location, purpose, required sections, linking, ownership.
+alwaysApply: true
+---
+
+## 3.6 PBI Detail Documents
+
+> Rationale: Provides a dedicated space for detailed requirements, technical design, and UX considerations for each PBI, ensuring comprehensive documentation and alignment across the team.
+
+- **Location Pattern**: `docs/delivery/<PBI-ID>/prd.md`
+- **Purpose**:
+  - Serve as a mini-PRD for the PBI
+  - Document the problem space and solution approach
+  - Provide technical and UX details beyond what's in the backlog
+  - Maintain a single source of truth for all PBI-related information
+- **Required Sections**:
+  - `# PBI-<ID>: <Title>`
+  - `## Overview`
+  - `## Problem Statement`
+  - `## User Stories`
+  - `## Technical Approach`
+  - `## UX/UI Considerations`
+  - `## Acceptance Criteria`
+  - `## Dependencies`
+  - `## Open Questions`
+  - `## Related Tasks`
+- **Linking**:
+  - Must link back to the main backlog entry: `[View in Backlog](../backlog.md#user-content-<PBI-ID>)`
+  - The backlog entry must link to this document: `[View Details](./<PBI-ID>/prd.md)`
+- **Ownership**:
+  - Created when a PBI moves from "Proposed" to "Agreed"
+  - Maintained by the team member implementing the PBI
+  - Reviewed during PBI review process

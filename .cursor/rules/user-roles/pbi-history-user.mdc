@@ -1,0 +1,16 @@
+---
+description: PBI history fields; User who made the change.
+alwaysApply: true
+---
+
+## 3.5 PBI History Log
+
+> Rationale: Specifies how all changes to PBIs are recorded, providing a complete audit trail.
+
+- **Location Description**: PBI change history is maintained in the backlog.md file.
+- **Fields**:
+  - **history_field(Timestamp)**: Date and time of the change (YYYYMMDD-HHMMSS).
+  - **history_field(PBI_ID)**: ID of the PBI that was changed.
+  - **history_field(Event_Type)**: Type of event that occurred.
+  - **history_field(Details)**: Description of the change.
+  - **history_field(User)**: User who made the change.

@@ -1,0 +1,11 @@
+---
+description: Event mark_blocked (InProgress to Blocked).
+alwaysApply: true
+---
+
+- **event_transition on "mark_blocked" from InProgress to Blocked**:
+  1. Document the reason for blocking in task history.
+  2. Identify any dependencies or issues causing the block.
+  3. Update task documentation with blocking details.
+  4. Notify relevant stakeholders of the block.
+  5. Consider creating new tasks to address blockers if needed.

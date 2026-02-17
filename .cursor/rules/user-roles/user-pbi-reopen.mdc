@@ -1,0 +1,10 @@
+---
+description: Event reopen (Rejected to InProgress) - User/team reopens PBI.
+alwaysApply: true
+---
+
+- **event_transition on "reopen" from Rejected to InProgress**:
+  1. Address all feedback from rejection.
+  2. Update PBI with changes made.
+  3. Log reopening in PBI history.
+  4. Notify team that work has resumed.

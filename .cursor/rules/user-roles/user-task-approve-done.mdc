@@ -1,0 +1,14 @@
+---
+description: Event approve (Review to Done) - User approves task implementation; includes Review Next Task Relevance.
+alwaysApply: true
+---
+
+- **event_transition on "approve" from Review to Done**:
+  1. Verify all acceptance criteria are met.
+  2. Merge changes to the main branch if applicable.
+  3. Update task documentation with completion details.
+  4. Update task status and log completion time.
+  5. Archive task documentation as needed.
+  6. Notify relevant stakeholders of completion.
+  7. Log approval in task history.
+  8. **Review Next Task Relevance**: Before marking as Done, review the next task(s) in the PBI task list in light of the current task's implementation outcomes. Confirm with the User whether subsequent tasks remain relevant, need modification, or have become redundant due to implementation decisions or scope changes in the current task. Document any task modifications or removals in the task history.

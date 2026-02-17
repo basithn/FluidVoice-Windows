@@ -1,0 +1,11 @@
+---
+description: Definition of User and AI_Agent actors.
+alwaysApply: true
+---
+
+## 1.1 Actors
+
+> Rationale: Defines who is involved in the process and what their roles are.
+
+- **User**: The individual responsible for defining requirements, prioritising work, approving changes, and ultimately accountable for all code modifications.
+- **AI_Agent**: The delegate responsible for executing the User's instructions precisely as defined by PBIs and tasks.

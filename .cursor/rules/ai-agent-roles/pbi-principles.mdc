@@ -1,0 +1,8 @@
+---
+description: Backlog single source of truth; PBIs ordered by priority.
+alwaysApply: true
+---
+
+## 3.3 Principles
+1. The backlog is the single source of truth for all PBIs.
+2. PBIs must be ordered by priority (highest at the top).

@@ -1,0 +1,37 @@
+---
+description: Task index file - location, purpose, required sections, table structure, prohibited content.
+alwaysApply: true
+---
+
+## 4.10 Task Index File
+
+> Rationale: Defines the standard structure for PBI-specific task index files, ensuring a consistent overview of tasks related to a Product Backlog Item.
+
+*   **Location Pattern**: `docs/delivery/<PBI-ID>/tasks.md`
+    *   Example: `docs/delivery/6/tasks.md`
+*   **Purpose**: To list all tasks associated with a specific PBI, provide a brief description for each, show their current status, and link to their detailed task files.
+*   **Required Sections and Content**:
+    1.  **Title**:
+        *   Format: `# Tasks for PBI <PBI-ID>: <PBI Title>`
+        *   Example: `# Tasks for PBI 6: Ensure enrichment tasks are resilient to service and web page disruption`
+    2.  **Introduction Line**:
+        *   Format: `This document lists all tasks associated with PBI <PBI-ID>.`
+    3.  **Link to Parent PBI**:
+        *   Format: `**Parent PBI**: [PBI <PBI-ID>: <PBI Title>](./prd.md)`
+        *   Example: `**Parent PBI**: [PBI 6: Ensure enrichment tasks are resilient to service and web page disruption](./prd.md)`
+    4.  **Task Summary Section Header**:
+        *   Format: `## Task Summary`
+    5.  **Task Summary Table**:
+        *   Columns: `| Task ID | Name | Status | Description |`
+        *   Markdown Table Structure:
+            ```markdown
+            | Task ID | Name                                     | Status   | Description                        |
+            | :------ | :--------------------------------------- | :------- | :--------------------------------- |
+            | <ID>    | [<Task Name>](./<PBI-ID>-<TaskNum>.md) | Proposed | <Brief task description>           |
+            ```
+        *   **`Task ID`**: The unique identifier for the task within the PBI (e.g., `6-1`).
+        *   **`Name`**: The full name of the task, formatted as a Markdown link to its individual task file (e.g., `[Define and implement core Circuit Breaker state machine](./6-1.md)`).
+        *   **`Status`**: The current status of the task, which must be one of the permitted values defined in Section 4.5 (Status Definitions).
+        *   **`Description`**: A brief, one-sentence description of the task's objective.
+*   **Prohibited Content**:
+    *   The Task Summary table in this file must only contain what is specified, and nothing else, unless a User specifically oks it.

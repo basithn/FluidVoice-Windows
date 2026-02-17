@@ -1,0 +1,6 @@
+---
+description: No task without an associated PBI.
+alwaysApply: true
+---
+
+2. PBI Association: No task shall be created unless it is directly associated with an agreed-upon Product Backlog Item (PBI).

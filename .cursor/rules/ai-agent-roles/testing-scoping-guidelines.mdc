@@ -1,0 +1,23 @@
+---
+description: Test scoping - unit, integration, E2E focus and mocking.
+alwaysApply: true
+---
+
+## 5.2 Test Scoping Guidelines
+
+1.  **Unit Tests**:
+    *   **Focus**: Test individual functions, methods, or classes in isolation from the code base. Specifically do not test package API methods directly they should be covered by the package tests themselves.
+    *   **Mocking**: Mock all external dependencies of the unit under test.
+    *   **Scope**: Verify the logic within the unit, including edge cases and error handling specific to that unit.
+
+2.  **Integration Tests**:
+    *   **Focus**: Verify the interaction and correct functioning of multiple components or services working together as a subsystem.
+    *   **Example**: Testing a feature that involves an API endpoint, a service layer, database interaction, and a job queue.
+    *   **Mocking Strategy**:
+        *   Mock external, third-party services at the boundary of your application (e.g., external APIs like Firecrawl, Gemini).
+        *   For internal infrastructure components (e.g., database, message queues like pg-boss), prefer using real instances configured for a test environment rather than deep mocking of their client libraries. This ensures tests are validating against actual behavior.
+    *   **Starting Point for Complex Features**: For features involving significant component interaction, consider starting with integration tests to ensure the overall flow and orchestration are correct before (or in parallel with) writing more granular unit tests for individual components.
+
+3.  **End-to-End (E2E) Tests**:
+    *   **Focus**: Test the entire application flow from the user's perspective, typically through the UI.
+    *   **Scope**: Reserved for critical user paths and workflows.

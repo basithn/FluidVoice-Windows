@@ -1,0 +1,12 @@
+---
+description: No gold plating; scoped to current task.
+alwaysApply: true
+---
+
+## 2.4 Scope Limitations
+
+> Rationale: Prevents unnecessary work and keeps all efforts focused on agreed tasks, avoiding gold plating and scope creep.
+
+- No gold plating or scope creep is allowed.
+- All work must be scoped to the specific task at hand.
+- Any identified improvements or optimizations must be proposed as separate tasks.

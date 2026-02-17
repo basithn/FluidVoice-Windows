@@ -1,0 +1,12 @@
+---
+description: Task status definitions - Proposed, Agreed, InProgress, Review, Done, Blocked.
+alwaysApply: true
+---
+
+## 4.5 Status Definitions
+- **task_status(Proposed)**: The initial state of a newly defined task.
+- **task_status(Agreed)**: The User has approved the task description and its place in the priority list.
+- **task_status(InProgress)**: The AI Agent is actively working on this task.
+- **task_status(Review)**: The AI Agent has completed the work and it awaits User validation.
+- **task_status(Done)**: The User has reviewed and approved the task's implementation.
+- **task_status(Blocked)**: The task cannot proceed due to an external dependency or issue.

@@ -1,0 +1,12 @@
+---
+description: Event approve (InReview to Done) - User approves PBI completion.
+alwaysApply: true
+---
+
+- **event_transition on "approve" from InReview to Done**:
+  1. Verify all acceptance criteria are met.
+  2. Ensure all tests pass.
+  3. Update PBI status and completion date.
+  4. Archive related tasks and documentation.
+  5. Log approval and completion in PBI history.
+  6. Notify stakeholders of PBI completion.

@@ -1,0 +1,12 @@
+---
+description: Event submit_for_review (InProgress to Review).
+alwaysApply: true
+---
+
+- **event_transition on "submit_for_review" from InProgress to Review**:
+  1. Ensure all task requirements are met.
+  2. Run all relevant tests and ensure they pass.
+  3. Update task documentation with implementation details.
+  4. Create a pull request or mark as ready for review.
+  5. Notify the User that review is needed.
+  6. Log submission for review in task history.

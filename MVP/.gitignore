@@ -1,0 +1,5 @@
+/target
+.env
+*.wav
+error.log
+stats.json

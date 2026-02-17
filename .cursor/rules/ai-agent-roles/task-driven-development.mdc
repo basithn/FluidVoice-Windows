@@ -1,0 +1,6 @@
+---
+description: No code change without an agreed-upon task.
+alwaysApply: true
+---
+
+1. Task-Driven Development: No code shall be changed in the codebase unless there is an agreed-upon task explicitly authorising that change.

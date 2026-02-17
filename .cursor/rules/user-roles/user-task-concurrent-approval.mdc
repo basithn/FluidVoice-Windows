@@ -1,0 +1,8 @@
+---
+description: User may approve additional concurrent tasks (exception to one-in-progress).
+alwaysApply: true
+---
+
+## 4.7 One In Progress Task Limit
+
+Only one task per PBI should be 'InProgress' at any given time to maintain focus and clarity. In special cases, the User may approve additional concurrent tasks.

@@ -1,0 +1,6 @@
+---
+description: Tasks as small as practicable, cohesive and testable.
+alwaysApply: true
+---
+
+10. **Task Granularity**: Tasks must be defined to be as small as practicable while still representing a cohesive, testable unit of work. Large or complex features should be broken down into multiple smaller tasks.

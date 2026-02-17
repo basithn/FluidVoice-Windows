@@ -1,0 +1,22 @@
+---
+description: Task documentation - location, file naming, required sections.
+alwaysApply: true
+---
+
+## 4.1 Task Documentation
+
+> Rationale: Specifies the structure and content required for task documentation, supporting transparency and reproducibility.
+
+- **Location Pattern**: docs/delivery/<PBI-ID>/
+- **File Naming**:
+  - Task list: `tasks.md`
+  - Task details: `<PBI-ID>-<TASK-ID>.md` (e.g., `1-1.md` for first task of PBI 1)
+- **Required Sections**:
+  > Rationale: Required sections ensure all tasks are fully described and verifiable
+  - `# [Task-ID] [Task-Name]`
+  - `## Description`
+  - `## Status History`
+  - `## Requirements`
+  - `## Implementation Plan`
+  - `## Verification`
+  - `## Files Modified`

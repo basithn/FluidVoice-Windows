@@ -1,0 +1,14 @@
+---
+description: Architectural compliance and policy reference.
+alwaysApply: true
+---
+
+## 1.2 Architectural Compliance
+
+> Rationale: Ensures all work aligns with architectural standards and references, promoting consistency and quality across the project.
+
+- **Policy Reference**: This document adheres to the AI Coding Agent Policy Document.
+- **Includes**:
+  - All tasks must be explicitly defined and agreed upon before implementation.
+  - All code changes must be associated with a specific task.
+  - All PBIs must be aligned with the PRD when applicable.

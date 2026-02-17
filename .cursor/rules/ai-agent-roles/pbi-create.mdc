@@ -1,0 +1,9 @@
+---
+description: Event create_pbi (set to Proposed).
+alwaysApply: true
+---
+
+- **event_transition on "create_pbi": set to **Proposed**:
+  1. Define clear user story and acceptance criteria.
+  2. Ensure PBI has a unique ID and clear title.
+  3. Log creation in PBI history.

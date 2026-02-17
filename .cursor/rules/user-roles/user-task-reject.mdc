@@ -1,0 +1,11 @@
+---
+description: Event reject (Review to InProgress) - User rejects task.
+alwaysApply: true
+---
+
+- **event_transition on "reject" from Review to InProgress**:
+  1. Document the reason for rejection in task history.
+  2. Update task documentation with review feedback.
+  3. Notify the AI Agent of required changes.
+  4. Update task status and log the rejection.
+  5. Create new tasks if additional work is identified.

@@ -1,0 +1,6 @@
+---
+description: Responsibility for all code changes remains with the User.
+alwaysApply: true
+---
+
+5. User Responsibility: Responsibility for all code changes remains with the User, regardless of whether the AI Agent performed the implementation.

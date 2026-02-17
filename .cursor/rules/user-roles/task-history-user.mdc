@@ -1,0 +1,18 @@
+---
+description: Task history fields; User who initiated the change.
+alwaysApply: true
+---
+
+## 4.8 Task History Log
+
+> Rationale: Specifies how all changes to tasks are recorded, providing a complete audit trail.
+
+- **Location Description**: Task change history is maintained in the task's markdown file under the 'Status History' section.
+- **Required Fields**:
+  > Rationale: Defines the required fields for logging task history, ensuring all relevant information is captured.
+  - **history_field(Timestamp)**: Date and time of the change (YYYY-MM-DD HH:MM:SS).
+  - **history_field(Event_Type)**: Type of event that occurred.
+  - **history_field(From_Status)**: Previous status of the task.
+  - **history_field(To_Status)**: New status of the task.
+  - **history_field(Details)**: Description of the change or action taken.
+  - **history_field(User)**: User who initiated the change.

@@ -1,0 +1,14 @@
+# FluidVoice Configuration
+
+# Global Hotkey (Default: Ctrl+Shift+V)
+# Supports: Ctrl, Shift, Alt, Meta + Key (A-Z, 0-9, F1-F12)
+hotkey = "Ctrl+Shift+V"
+
+# Recording Duration in Milliseconds (Default: 5000 = 5 seconds)
+record_duration_ms = 5000
+
+# Optional: Audio Device Index (See console output for list)
+# audio_device_index = 1
+
+# Optional: OpenAI API Key (overrides .env file)
+# openai_api_key = "sk-..."

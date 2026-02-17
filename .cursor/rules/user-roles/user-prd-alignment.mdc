@@ -1,0 +1,8 @@
+---
+description: PBIs checked for PRD alignment; discrepancies raised with the User.
+alwaysApply: true
+---
+
+## 2.2 PRD Alignment Check
+
+All PBIs must be checked for alignment with the PRD. Any discrepancies must be raised with the User.

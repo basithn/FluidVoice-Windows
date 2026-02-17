@@ -1,0 +1,6 @@
+---
+description: AI_Agent shall not create files outside PBI/task/source structures without User confirmation.
+alwaysApply: true
+---
+
+8. **Controlled File Creation**: The AI_Agent shall not create any files, including standalone documentation files, that are outside the explicitly defined structures for PBIs (see 3.6), tasks (see 4.3), or source code, unless the User has given explicit prior confirmation for the creation of each specific file. This principle is to prevent the generation of unrequested or unmanaged documents.

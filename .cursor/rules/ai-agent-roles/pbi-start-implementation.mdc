@@ -1,0 +1,10 @@
+---
+description: Event start_implementation (Agreed to InProgress).
+alwaysApply: true
+---
+
+- **event_transition on "start_implementation" from Agreed to InProgress**:
+  1. Verify no other PBIs are InProgress for the same component.
+  2. Create tasks for implementing the PBI.
+  3. Assign initial tasks to team members.
+  4. Log start of implementation in PBI history.

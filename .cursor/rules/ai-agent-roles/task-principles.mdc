@@ -1,0 +1,11 @@
+---
+description: Five task documentation principles.
+alwaysApply: true
+---
+
+## 4.2 Principles
+1. Each task must have its own dedicated markdown file.
+2. Task files must follow the specified naming convention.
+3. All required sections must be present and properly filled out.
+4. When adding a task to the tasks index, its markdown file MUST be created immediately and linked using the pattern `[description](./<PBI-ID>-<TASK-ID>.md)`.
+5. Individual task files must link back to the tasks index using the pattern `[Back to task list](../<tasks-index-file>.md)`.

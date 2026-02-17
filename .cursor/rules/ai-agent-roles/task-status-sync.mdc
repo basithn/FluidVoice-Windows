@@ -1,0 +1,24 @@
+---
+description: Task status synchronisation - immediate updates, verification, examples.
+alwaysApply: true
+---
+
+## 4.4 Task Status Synchronisation
+
+To maintain consistency across the codebase:
+
+1. **Immediate Updates**: When a task's status changes, update both the task file and the tasks index (1-tasks.md) in the same commit.
+2. **Status History**: Always add an entry to the task's status history when changing status.
+3. **Status Verification**: Before starting work on a task, verify its status in both locations.
+4. **Status Mismatch**: If a status mismatch is found, immediately update both locations to the most recent status.
+
+Example of a status update in a task file:
+```
+| 2025-05-19 15:02:00 | Created       | N/A      | Proposed  | Task file created | Julian |
+| 2025-05-19 16:15:00 | Status Update | Proposed | InProgress | Started work      | Julian |
+```
+
+Example of the corresponding update in 1-tasks.md:
+```
+| 1-7 | [Add pino logging...](./1-7.md) | InProgress | Pino logs connection... |
+```

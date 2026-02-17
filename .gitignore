@@ -1,0 +1,52 @@
+# System Files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editors & IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Rust
+target/
+**/*.rs.bk
+Cargo.lock
+
+# FluidVoice MVP Specifics
+MVP/target/
+MVP/.env
+MVP/config.toml
+MVP/stats.json
+MVP/recording.wav
+MVP/error.log
+
+# Build Artifacts (Binaries)
+*.exe
+*.dll
+*.pdb
+
+# Distribution Folder (Generated)
+# We ignore the folder content but keep the folder itself if we want
+# Or verify if we want to track 'dist' as a release package.
+# Generally, don't commit binaries.
+MVP/dist/fluidvoice-mvp.exe
+MVP/dist/*.exe
+MVP/dist/recording.wav
+
+# Telemetry & Logs
+*.log
+*.json
+!package.json
+!tsconfig.json
+!MVP/dist/config.toml # Keep templates
+
+# Ignore specific downloaded versions
+FluidVoice-1.5.5/
+FluidVoice-1.5.5.zip
+Fluid-oss-1.5.5/
+Fluid-oss-1.5.5.zip
+

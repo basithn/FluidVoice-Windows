@@ -1,0 +1,9 @@
+---
+description: Named constants for repeated/special values.
+alwaysApply: true
+---
+
+12. **Use of Constants for Repeated or Special Values**: Any value (number, string, etc.) used more than once in generated code—especially "magic numbers" or values with special significance—**must** be defined as a named constant.
+    - Example: Instead of `for (let i = 0; i < 10; i++) { ... }`, define `const numWebsites = 10;` and use `for (let i = 0; i < numWebsites; i++) { ... }`.
+    - All subsequent uses must reference the constant, not the literal value.
+    - This applies to all code generation, automation, and manual implementation within the project.

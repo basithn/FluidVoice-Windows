@@ -1,0 +1,11 @@
+---
+description: Event significant_update (Review to InProgress).
+alwaysApply: true
+---
+
+- **event_transition on "significant_update" from Review to InProgress**:
+  1. Document the nature of significant changes made to task requirements, implementation plan, or test plan.
+  2. Update task status to reflect that additional work is now required.
+  3. Log the update reason in task history.
+  4. Notify stakeholders that the task requires additional implementation work.
+  5. Resume development work to address the updated requirements.

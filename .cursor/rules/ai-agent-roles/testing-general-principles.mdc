@@ -1,0 +1,11 @@
+---
+description: Testing - risk-based, pyramid, clarity, automation.
+alwaysApply: true
+---
+
+## 5.1 General Principles for Testing
+
+1.  **Risk-Based Approach**: Prioritize testing efforts based on the complexity and risk associated with the features being developed.
+2.  **Test Pyramid Adherence**: Strive for a healthy balance of unit, integration, and end-to-end tests. While unit tests form the base, integration tests are crucial for verifying interactions between components.
+3.  **Clarity and Maintainability**: Tests should be clear, concise, and easy to understand and maintain. Avoid overly complex test logic.
+4.  **Automation**: Automate tests wherever feasible to ensure consistent and repeatable verification.

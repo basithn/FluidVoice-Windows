@@ -1,0 +1,6 @@
+---
+description: PBI features sense-checked against PRD.
+alwaysApply: true
+---
+
+3. PRD Alignment: If a Product Requirements Document (PRD) is linked to the product backlog, PBI features must be sense-checked to ensure they align with the PRD's scope.

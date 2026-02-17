@@ -1,0 +1,6 @@
+---
+description: When User asks for a change without a task, AI must not do the work; have a conversation.
+alwaysApply: true
+---
+
+If the User asks to make a change without referring to a task, then the AI Agent must not do the work and must have a conversation about it to determine if it should be associated with an existing task or if a new PBI + task should be created.

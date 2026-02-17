@@ -1,0 +1,35 @@
+[package]
+name = "fluidvoice-mvp"
+version = "0.1.0"
+edition = "2021"
+description = "FluidVoice for Windows - Voice-to-text dictation MVP"
+
+[dependencies]
+anyhow = "1.0"
+cpal = "0.15"
+hound = "3.5"
+reqwest = { version = "0.11", features = ["json", "multipart", "blocking"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1.35", features = ["rt-multi-thread", "macros"] }
+colored = "2.1"
+dotenv = "0.15"
+enigo = "0.1" # Week 2: Text injection
+rdev = "0.5"  # Week 3: Global hotkey
+toml = "0.8"  # Week 4: Configuration
+ctrlc = "3.4" # Week 4: Graceful shutdown
+
+# Phase 2: Usability Polish
+tray-item = "0.10"
+rodio = "0.18" # Audio playback
+single-instance = "0.3" # prevent multiple copies
+# image = "0.24" # Not needed for tray-item if using resource/data? Keep for now just in case
+
+
+
+[profile.release]
+strip = true      # Automatically strip symbols from the binary.
+opt-level = "z"   # Optimize for size.
+lto = true        # Enable Link Time Optimization (LTO).
+codegen-units = 1 # Reduce Parallel Code Generation Units to Increase Optimization.
+panic = "abort"   # Abort on panic (smaller binary).

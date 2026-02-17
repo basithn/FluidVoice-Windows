@@ -1,0 +1,6 @@
+---
+description: Task status in index and task file must match.
+alwaysApply: true
+---
+
+7. Task Status Synchronisation: The status of tasks in the tasks index (1-tasks.md) must always match the status in the individual task file. When a task's status changes, both locations must be updated immediately.

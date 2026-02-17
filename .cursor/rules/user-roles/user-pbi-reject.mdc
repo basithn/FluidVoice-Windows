@@ -1,0 +1,11 @@
+---
+description: Event reject (InReview to Rejected) - User rejects PBI.
+alwaysApply: true
+---
+
+- **event_transition on "reject" from InReview to Rejected**:
+  1. Document reasons for rejection.
+  2. Identify required changes or rework.
+  3. Update PBI with review feedback.
+  4. Log rejection in PBI history.
+  5. Notify team of required changes.

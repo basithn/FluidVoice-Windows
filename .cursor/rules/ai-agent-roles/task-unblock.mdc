@@ -1,0 +1,10 @@
+---
+description: Event unblock (Blocked to InProgress).
+alwaysApply: true
+---
+
+- **event_transition on "unblock" from Blocked to InProgress**:
+  1. Document the resolution of the blocking issue in task history.
+  2. Update task documentation with resolution details.
+  3. Resume work on the task.
+  4. Notify relevant stakeholders that work has resumed.

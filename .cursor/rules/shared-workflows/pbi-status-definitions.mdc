@@ -1,0 +1,12 @@
+---
+description: PBI status definitions - Proposed, Agreed, InProgress, InReview, Done, Rejected.
+alwaysApply: true
+---
+
+### 3.4.1 Status Definitions
+- **status(Proposed)**: PBI has been suggested but not yet approved.
+- **status(Agreed)**: PBI has been approved and is ready for implementation.
+- **status(InProgress)**: PBI is being actively worked on.
+- **status(InReview)**: PBI implementation is complete and awaiting review.
+- **status(Done)**: PBI has been completed and accepted.
+- **status(Rejected)**: PBI has been rejected and requires rework or deprioritization.

@@ -1,0 +1,14 @@
+---
+description: Backlog location, structure, table format.
+alwaysApply: true
+---
+
+## 3.2 Backlog Document Rules
+
+> Rationale: Specifies how the backlog is documented and structured, so that all PBIs are tracked and managed in a consistent way.
+
+- **Location Pattern**: docs/delivery/backlog.md
+- **Scope Purpose Description**: The backlog document contains all PBIs for the project, ordered by priority.
+- **Structure**:
+  > Rationale: Defines the required table format for PBIs, ensuring standardisation and ease of use.
+  - **Table**: `| ID | Actor | User Story | Status | Conditions of Satisfaction (CoS) |`

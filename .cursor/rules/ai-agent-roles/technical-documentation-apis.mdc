@@ -1,0 +1,12 @@
+---
+description: Technical docs for APIs/interfaces.
+alwaysApply: true
+---
+
+13. **Technical Documentation for APIs and Interfaces**: As part of completing any PBI that creates or modifies APIs, services, or interfaces, technical documentation must be created or updated explaining how to use these components. This documentation should include:
+    - API usage examples and patterns
+    - Interface contracts and expected behaviors
+    - Integration guidelines for other developers
+    - Configuration options and defaults
+    - Error handling and troubleshooting guidance
+    - The documentation must be created in the appropriate location (e.g., `docs/technical/` or inline code documentation) and linked from the PBI detail document.

@@ -1,0 +1,35 @@
+---
+description: Version control for task completion - commit format, PR title, git acp, verification.
+alwaysApply: true
+---
+
+### 4.9 Version Control for Task Completion
+
+> Rationale: Ensures consistent version control practices when completing tasks, maintaining traceability and automation.
+
+1. **Commit Message Format**:
+   - When a task moves from `Review` to `Done`, create a commit with the message:
+     ```
+     <task_id> <task_description>
+     ```
+   - Example: `1-7 Add pino logging to help debug database connection issues`
+
+2. **Pull Request**:
+   - Title: `[<task_id>] <task_description>`
+   - Include a link to the task in the description
+   - Ensure all task requirements are met before marking as `Done`
+
+3. **Automation**:
+   - When a task is marked as `Done`, run:
+     ```bash
+     git acp "<task_id> <task_description>"
+     ```
+   - This command should:
+     1. Stage all changes
+     2. Create a commit with the specified message
+     3. Push to the remote branch
+
+4. **Verification**:
+   - Ensure the commit appears in the task's history
+   - Confirm the task status is updated in both the task file and index
+   - Verify the commit message follows the required format

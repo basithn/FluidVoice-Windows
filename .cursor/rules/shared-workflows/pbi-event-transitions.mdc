@@ -1,0 +1,62 @@
+---
+description: All PBI event transitions (create_pbi through deprioritize) and note.
+alwaysApply: true
+---
+
+### 3.4.2 Event Transitions
+
+**create_pbi (set to Proposed):**
+1. Define clear user story and acceptance criteria.
+2. Ensure PBI has a unique ID and clear title.
+3. Log creation in PBI history.
+
+**propose_for_backlog (Proposed to Agreed):**
+1. Verify PBI aligns with PRD and project goals.
+2. Ensure all required information is complete.
+3. Log approval in PBI history.
+4. Notify stakeholders of new approved PBI.
+
+**start_implementation (Agreed to InProgress):**
+1. Verify no other PBIs are InProgress for the same component.
+2. Create tasks for implementing the PBI.
+3. Assign initial tasks to team members.
+4. Log start of implementation in PBI history.
+
+**submit_for_review (InProgress to InReview):**
+1. Verify all tasks for the PBI are complete.
+2. Ensure all acceptance criteria are met.
+3. Update documentation as needed.
+4. Notify reviewers that PBI is ready for review.
+5. Log submission for review in PBI history.
+
+**approve (InReview to Done):**
+1. Verify all acceptance criteria are met.
+2. Ensure all tests pass.
+3. Update PBI status and completion date.
+4. Archive related tasks and documentation.
+5. Log approval and completion in PBI history.
+6. Notify stakeholders of PBI completion.
+
+**reject (InReview to Rejected):**
+1. Document reasons for rejection.
+2. Identify required changes or rework.
+3. Update PBI with review feedback.
+4. Log rejection in PBI history.
+5. Notify team of required changes.
+
+**reopen (Rejected to InProgress):**
+1. Address all feedback from rejection.
+2. Update PBI with changes made.
+3. Log reopening in PBI history.
+4. Notify team that work has resumed.
+
+**deprioritize (Agreed/InProgress to Proposed):**
+1. Document reason for deprioritization.
+2. Pause any in-progress work on the PBI.
+3. Update PBI status and priority.
+4. Log deprioritization in PBI history.
+5. Notify stakeholders of the change in priority.
+
+### 3.4.3 Note
+
+All status transitions must be logged in the PBI's history with timestamp and user who initiated the transition.

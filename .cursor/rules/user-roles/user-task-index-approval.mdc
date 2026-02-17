@@ -1,0 +1,7 @@
+---
+description: Task Summary table content only as specified unless User specifically oks it.
+alwaysApply: true
+---
+
+**Prohibited Content**:
+The Task Summary table in this file must only contain what is specified, and nothing else, unless a User specifically oks it.

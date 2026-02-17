@@ -1,0 +1,11 @@
+---
+description: Event submit_for_review (InProgress to InReview).
+alwaysApply: true
+---
+
+- **event_transition on "submit_for_review" from InProgress to InReview**:
+  1. Verify all tasks for the PBI are complete.
+  2. Ensure all acceptance criteria are met.
+  3. Update documentation as needed.
+  4. Notify reviewers that PBI is ready for review.
+  5. Log submission for review in PBI history.

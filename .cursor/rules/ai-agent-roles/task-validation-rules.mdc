@@ -1,0 +1,36 @@
+---
+description: Task validation - core rules, pre-implementation checks, error prevention, change management.
+alwaysApply: true
+---
+
+### 4.8.2 Task Validation Rules
+
+> Rationale: Ensures all tasks adhere to required standards and workflows.
+
+1. **Core Rules**:
+   - All tasks must be associated with an existing PBI
+   - Task IDs must be unique within their parent PBI
+   - Tasks must follow the defined workflow states and transitions
+   - All required documentation must be completed before marking a task as 'Done'
+   - Task history must be maintained for all status changes
+   - Only one task per PBI may be 'InProgress' at any time, unless explicitly approved
+   - Every task in the tasks index MUST have a corresponding markdown file
+   - Task descriptions in the index MUST be linked to their markdown files
+
+2. **Pre-Implementation Checks**:
+   - Verify the task exists and is in the correct status before starting work
+   - Document the task ID in all related changes
+   - List all files that will be modified
+   - Get explicit approval before proceeding with implementation
+
+3. **Error Prevention**:
+   - If unable to access required files, stop and report the issue
+   - For protected files, provide changes in a format that can be manually applied
+   - Verify task status in both task file and index before starting work
+   - Document all status checks in the task history
+
+4. **Change Management**:
+   - Reference the task ID in all commit messages
+   - Update task status according to workflow
+   - Ensure all changes are properly linked to the task
+   - Document any deviations from the planned implementation

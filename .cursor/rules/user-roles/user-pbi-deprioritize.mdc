@@ -1,0 +1,11 @@
+---
+description: Event deprioritize (Agreed/InProgress to Proposed) - User deprioritizes.
+alwaysApply: true
+---
+
+- **event_transition on "deprioritize" from (Agreed, InProgress) to Proposed**:
+  1. Document reason for deprioritization.
+  2. Pause any in-progress work on the PBI.
+  3. Update PBI status and priority.
+  4. Log deprioritization in PBI history.
+  5. Notify stakeholders of the change in priority.

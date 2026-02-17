@@ -1,0 +1,13 @@
+---
+description: Ascertain PBI/Task first; all changes associated with a task; no work without task.
+alwaysApply: true
+---
+
+## 2.5 Change Management Rules
+
+> Rationale: Defines how changes are managed, requiring explicit association with tasks and strict adherence to scope.
+
+- Conversation about any code change must start by ascertaining the linked PBI or Task before proceeding.
+- All changes must be associated with a specific task.
+- No changes should be made outside the scope of the current task.
+- Any scope creep must be identified, rolled back, and addressed in a new task.
