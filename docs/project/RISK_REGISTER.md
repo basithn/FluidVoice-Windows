@@ -63,9 +63,9 @@ This document tracks known risks, their likelihood, potential impact, and mitiga
 | **Description** | `whisper.cpp` is under active development; API changes could break `whisper-rs` bindings. |
 | **Likelihood** | High (Occurred v0.12 -> v0.15) |
 | **Impact** | Medium — required code refactor |
-| **Mitigation** | (1) Pin `whisper-rs` version. (2) Monitor releases. (3) **Status:** Mitigated in MVP (Pinned v0.15). |
+| **Mitigation** | (1) Pin `whisper-rs` version. (2) Monitor releases. |
 | **Owner** | Basit |
-| **Status** | **Monitoring** |
+| **Status** | **Mitigated** — Pinned to v0.15.1 in MVP |
 
 ---
 
@@ -95,16 +95,51 @@ This document tracks known risks, their likelihood, potential impact, and mitiga
 
 ---
 
-### R-07 🟡 Tauri v2 maturity for advanced window features
+### R-07 🟢 ~~Tauri v2 maturity for advanced window features~~
 
 | Field | Detail |
 |-------|--------|
-| **Description** | Tauri v2 is relatively new; advanced features like transparent/click-through overlay windows, multi-monitor positioning, and tray behaviors may have bugs or missing APIs. |
+| **Description** | Originally flagged as risk for Tauri v2 overlay windows. |
+| **Status** | **Closed** — MVP was built as pure Rust (no Tauri). Tauri may be revisited for future UI phases. |
+
+---
+
+### R-08 🟠 No visibility into customer deployments
+
+| Field | Detail |
+|-------|--------|
+| **Description** | Console is hidden in release mode (`windows_subsystem = "windows"`). All `println!`/`eprintln!` output vanishes. `stats.json` writes to CWD (lossy). No remote reporting exists. If the app crashes or malfunctions on a customer machine, there is zero visibility. |
+| **Likelihood** | High — already the case today |
+| **Impact** | High — can't diagnose customer issues |
+| **Mitigation** | Phase 4: (1) Replace prints with `tracing` + file logging. (2) Move stats to `%LOCALAPPDATA%`. (3) Add Sentry crash reporting. (4) Add heartbeat. |
+| **Owner** | Basit |
+| **Status** | **Planned** — Phase 4 (roadmap_fv.md) |
+
+---
+
+### R-09 🟡 Privacy risk from telemetry
+
+| Field | Detail |
+|-------|--------|
+| **Description** | Adding remote telemetry (crash reports, heartbeats, metrics) introduces a risk of accidentally transmitting sensitive user data (transcripts, API keys, audio). |
 | **Likelihood** | Medium |
-| **Impact** | Medium — may need workarounds or direct Win32 fallbacks |
-| **Mitigation** | (1) Prototype overlay window early (Phase 1). (2) Be prepared to use raw Win32 APIs via the `windows` crate for overlay if Tauri APIs are insufficient. (3) Engage with Tauri community / issues. |
-| **Owner** | TBD |
-| **Status** | Open |
+| **Impact** | High — legal/trust issues |
+| **Mitigation** | (1) Never log/transmit raw transcripts or audio. (2) Use anonymous machine IDs only. (3) Mask API keys in diagnostic exports. (4) Provide opt-out toggle in config. (5) Document what is collected. |
+| **Owner** | Basit |
+| **Status** | **Planned** — privacy checklist in monitoring_research.md |
+
+---
+
+### R-10 🟢 Telemetry overhead on low-end hardware
+
+| Field | Detail |
+|-------|--------|
+| **Description** | JSON structured logging and periodic HTTP heartbeats could add CPU/memory/disk overhead on low-end customer machines. |
+| **Likelihood** | Low |
+| **Impact** | Low — tracing is async + non-blocking writer |
+| **Mitigation** | (1) Use `tracing_appender::non_blocking` writer. (2) Heartbeat is fire-and-forget with long interval (60 min). (3) Log rotation limits disk usage. |
+| **Owner** | Basit |
+| **Status** | **Planned** |
 
 ---
 
@@ -112,7 +147,8 @@ This document tracks known risks, their likelihood, potential impact, and mitiga
 
 | # | Question | Decision Required By | Notes |
 |---|----------|---------------------|-------|
-| Q-1 | Should the app require "Run as Administrator" by default? | Phase 1 | Trade-off: broader app compatibility vs. security concerns |
-| Q-2 | Should we support Windows 10 or target Windows 11-only? | Phase 1 | Win 10 has larger market share but drops WinUI 3 features |
-| Q-3 | How to handle enterprise environments with AppLocker / Group Policy? | Phase 4 | May block hooks, unsigned exes, or tray icons |
-| Q-4 | Is code-signing certificate needed before public release? | Phase 4 | Required for SmartScreen trust + AV whitelist |
+| Q-1 | Should the app require "Run as Administrator" by default? | Future | Trade-off: broader app compatibility vs. security concerns |
+| Q-2 | Should we support Windows 10 or target Windows 11-only? | Future | **Decided: Both** — MVP tested on Win 10 + 11 |
+| Q-3 | How to handle enterprise environments with AppLocker / Group Policy? | Future | May block hooks, unsigned exes, or tray icons |
+| Q-4 | Is code-signing certificate needed before customer deployment? | Phase 4 | Required for SmartScreen trust + AV whitelist |
+| Q-5 | What backend to use for heartbeat ingestion? | Phase 4 | Options: Supabase (free), Cloudflare Workers + D1 (free), custom VPS |

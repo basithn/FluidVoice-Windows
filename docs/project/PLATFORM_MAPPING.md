@@ -62,9 +62,12 @@ This document is a reference for every macOS-specific API/framework used by Flui
 | Capability | macOS API | Windows Equivalent | Rust Crate / Library |
 |------------|-----------|-------------------|---------------------|
 | HTTP requests | `URLSession` | `reqwest` (Rust) or `fetch` (frontend) | `reqwest` |
-| Auto-update | AppUpdater (GitHub releases) | Tauri updater plugin / Squirrel | `tauri-plugin-updater` |
-| App packaging | `.app` bundle, `.dmg` | `.msi` / `.exe` installer (Tauri bundler, NSIS, WiX) | `tauri::bundler` |
-| Analytics | PostHog (Swift SDK) | PostHog (REST API or JS SDK) | `reqwest` or frontend SDK |
+| Auto-update | AppUpdater (GitHub releases) | `self_update` crate (GitHub Releases) | `self_update` |
+| App packaging | `.app` bundle, `.dmg` | `.exe` + ZIP (manual), installer later | Manual / future |
+| Analytics | PostHog (Swift SDK) | PostHog (REST API) or custom HTTP endpoint | `reqwest` |
+| Crash reporting | Sentry (Swift SDK) | Sentry (Rust SDK) + Breakpad | `sentry` |
+| Structured logging | `os_log` / CocoaLumberjack | `tracing` + `tracing-appender` (JSON to file) | `tracing`, `tracing-subscriber`, `tracing-appender` |
+| System diagnostics | `sysctl`, `ProcessInfo` | `sysinfo` crate | `sysinfo` |
 
 ---
 
@@ -84,13 +87,21 @@ This document is a reference for every macOS-specific API/framework used by Flui
 | Crate | Purpose |
 |-------|---------|
 | `windows` | Win32 / COM / WinRT bindings |
-| `tauri` | App framework, tray, windows, IPC |
 | `whisper-rs` | Whisper.cpp Rust bindings |
 | `cpal` | Cross-platform audio I/O (WASAPI on Windows) |
+| `enigo` | Keyboard simulation / text injection |
+| `rdev` | Global hotkey listener |
 | `reqwest` | HTTP client |
-| `rusqlite` | SQLite database |
+| `tray-item` | System tray icon + menu |
+| `rodio` | Audio playback (beeps) |
+| `single-instance` | Prevent duplicate processes |
 | `serde` / `serde_json` | Serialization |
+| `toml` | Config file parsing |
 | `tokio` | Async runtime |
 | `dirs` | Platform standard directories |
-| `arboard` | Cross-platform clipboard |
-| `tracing` | Logging / diagnostics |
+| `tracing` | Structured logging / diagnostics |
+| `tracing-subscriber` | JSON log output + filtering |
+| `tracing-appender` | Daily log rotation to file |
+| `sentry` | Crash reporting |
+| `sysinfo` | System information (diagnostics) |
+| `self_update` | Auto-updater via GitHub Releases |

@@ -63,10 +63,19 @@
 
 | ID | Feature | Description | Priority |
 |----|---------|-------------|----------|
-| F-13 | **Settings Panel** | GUI for hotkey, model size, AI provider, theme, audio device. | P1 |
-| F-14 | **History** | Searchable log of past transcriptions and AI outputs. | P2 |
-| F-15 | **Secure API Key Storage** | Store provider API keys using Windows Credential Manager / DPAPI. | P1 |
-| F-16 | **Auto-Updater** | Check GitHub releases and offer in-app updates. | P2 |
+| F-13 | **Settings Panel** | GUI for hotkey, model size, AI provider, theme, audio device. | P1 | ⬜ Future |
+| F-14 | **History** | Searchable log of past transcriptions and AI outputs. | P2 | ⬜ Future |
+| F-15 | **Secure API Key Storage** | Store provider API keys using Windows Credential Manager / DPAPI. | P1 | ⚠️ Config file only |
+| F-16 | **Auto-Updater** | Check GitHub releases and offer in-app updates. | P2 | ⬜ Phase 5 |
+
+### 3.5 Observability & Monitoring (Phase 4 — New)
+
+| ID | Feature | Description | Priority | Status |
+|----|---------|-------------|----------|--------|
+| F-17 | **Structured Logging** | JSON log files in `%LOCALAPPDATA%`, timing instrumentation, error context | P0 | ⬜ Phase 4 |
+| F-18 | **Crash Reporting** | Remote panic/error capture via Sentry | P1 | ⬜ Phase 4 |
+| F-19 | **Heartbeat & Diagnostics** | Health ping, diagnostic zip export, audio quality metrics | P1 | ⬜ Phase 4 |
+| F-20 | **Fleet Dashboard** | Backend to track active installs, versions, error rates | P2 | ⬜ Phase 5 |
 
 ---
 
@@ -99,9 +108,19 @@
 
 ## 6. Success Metrics (v1)
 
+| Metric | Target | Status |
+|--------|--------|--------|
+| Dictation-to-type latency (Whisper base, modern hardware) | < 3 seconds for 10s audio clip | ✅ Met |
+| App compatibility (type-into) | Works in Notepad, VS Code, Chrome, Slack | ✅ Met |
+| Crash-free sessions | > 99 % | ✅ Met (limited testing) |
+| Setup-to-first-dictation time | < 5 minutes | ✅ Met |
+
+## 📈 Success Metrics (Observability — Phase 4+)
+
 | Metric | Target |
 |--------|--------|
-| Dictation-to-type latency (Whisper small, modern hardware) | < 3 seconds for 10s audio clip |
-| App compatibility (type-into) | Works in Notepad, VS Code, Chrome, Slack, Teams, Word |
-| Crash-free sessions | > 99 % |
-| Setup-to-first-dictation time | < 5 minutes |
+| Any customer issue diagnosable from log files | ✅ |
+| 100% of panics reported to Sentry | Within 24 hours |
+| Know which version each customer runs | Via heartbeat |
+| Mean-time-to-resolution for common issues | < 1 hour |
+| Zero transcripts or PII transmitted | Privacy-first |

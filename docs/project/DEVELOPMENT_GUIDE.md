@@ -6,18 +6,18 @@
 
 | Tool | Version | Purpose |
 |------|---------|---------|
-| **Rust** | 1.75+ (stable) | Backend / core logic |
-| **Node.js** | 20 LTS+ | Frontend build tooling |
-| **npm** | 10+ | Package manager |
-| **Visual Studio Build Tools** | 2022+ | MSVC compiler for Rust on Windows |
+| **Rust** | 1.75+ (stable) | Application language |
+| **Visual Studio Build Tools** | 2022+ | MSVC compiler (required for `whisper-rs` C++ bindings) |
 | **Git** | 2.40+ | Version control |
+| **CMake** | 3.25+ | Required by `whisper-rs` build process |
+
+> **Note:** Node.js / npm are **not needed** for the current MVP. The app is pure Rust with no frontend.
 
 ### Optional (for GPU acceleration)
 
 | Tool | Version | Purpose |
 |------|---------|---------|
 | **CUDA Toolkit** | 12.x | NVIDIA GPU acceleration for Whisper |
-| **Vulkan SDK** | 1.3+ | AMD/Intel/NVIDIA GPU acceleration |
 
 ### Installation Steps
 
@@ -26,24 +26,13 @@
 ```powershell
 # Download and run rustup
 winget install Rustlang.Rustup
-# Or visit https://rustup.rs
 
 # Verify
 rustc --version
 cargo --version
 ```
 
-#### 2. Install Node.js
-
-```powershell
-winget install OpenJS.NodeJS.LTS
-
-# Verify
-node --version
-npm --version
-```
-
-#### 3. Install Visual Studio Build Tools
+#### 2. Install Visual Studio Build Tools
 
 ```powershell
 winget install Microsoft.VisualStudio.2022.BuildTools
@@ -53,10 +42,10 @@ During installation, select:
 - **"Desktop development with C++"** workload
 - Windows 10/11 SDK
 
-#### 4. Install Tauri CLI
+#### 3. Install CMake
 
 ```powershell
-cargo install tauri-cli
+winget install Kitware.CMake
 ```
 
 ---
@@ -70,48 +59,57 @@ git clone <repository-url>
 cd FluidVoice
 ```
 
-### Install Frontend Dependencies
+### Configure API Key (OpenAI build only)
 
 ```powershell
-npm install
-```
+# Copy example config
+cp MVP/dist/config-openai.toml.example MVP/dist/config-openai.toml
 
-### Download a Whisper Model (for development)
-
-```powershell
-# Create models directory
-mkdir models
-
-# Download base.en model (~142 MB)
-curl -L -o models/ggml-base.en.bin https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.en.bin
+# Edit with your API key
+notepad MVP/dist/config-openai.toml
 ```
 
 ---
 
-## 3. Running the App (MVP Walking Skeleton)
- 
- This phase is a **pure Rust application** (no Tauri/Frontend yet).
- 
- ### Development Mode
- 
- ```powershell
- # Run the Rust binary directly
- cargo run
- ```
- 
- This will:
- 1.  Compile the backend.
- 2.  Download the model (if missing).
- 3.  Start the system tray (background process).
- 4.  Listen for `Ctrl+Shift+V`.
- 
- ### Production Build
- 
- ```powershell
- cargo build --release
- ```
- 
- Output will be in `target/release/fluidvoice-mvp.exe`.
+## 3. Building & Running
+
+### Development Mode
+
+```powershell
+cd MVP
+
+# Run with local Whisper (default)
+cargo run
+
+# Run with OpenAI cloud mode
+cargo run --no-default-features --features openai
+```
+
+On first run (local mode), the app will automatically download `ggml-base.en.bin` (~142 MB) from Hugging Face.
+
+### Production Build
+
+```powershell
+cd MVP
+
+# Local Whisper build (default)
+cargo build --release
+
+# OpenAI cloud build
+cargo build --release --no-default-features --features openai
+```
+
+Output: `MVP/target/release/fluidvoice-mvp.exe`
+
+### Distribution Package
+
+The `MVP/dist/` folder contains the distribution template:
+```
+dist/
+├── fluidvoice-mvp.exe      # Copy from target/release/
+├── config.toml              # Default config (local mode)
+└── config-openai.toml       # Config for OpenAI mode
+```
 
 ---
 
@@ -119,147 +117,126 @@ curl -L -o models/ggml-base.en.bin https://huggingface.co/ggerganov/whisper.cpp/
 
 ```
 FluidVoice/
-├── src-tauri/                  # Rust backend
+├── MVP/                            # Main application
 │   ├── src/
-│   │   ├── main.rs             # Entry point, Tauri setup
-│   │   ├── hotkey.rs           # Global keyboard hook
-│   │   ├── audio.rs            # WASAPI microphone capture
-│   │   ├── asr.rs              # Whisper inference
-│   │   ├── ai_provider.rs      # LLM API client
-│   │   ├── typing.rs           # SendInput / clipboard paste
-│   │   ├── overlay.rs          # Overlay window management
-│   │   ├── tray.rs             # System tray
-│   │   ├── credentials.rs      # Windows Credential Manager
-│   │   ├── history.rs          # SQLite storage
-│   │   └── config.rs           # Settings read/write
-│   ├── Cargo.toml
-│   └── tauri.conf.json         # Tauri configuration
-├── src/                        # Frontend (React + TypeScript)
-│   ├── App.tsx
-│   ├── components/
-│   ├── hooks/
-│   └── styles/
+│   │   ├── main.rs                 # Entry point, pipeline, audio, hotkey, typing
+│   │   ├── config.rs               # AppConfig struct, TOML read/write
+│   │   ├── telemetry.rs            # UsageStats, stats.json persistence
+│   │   ├── tray.rs                 # System tray icon + context menu
+│   │   ├── audio_feedback.rs       # Procedural beep sounds (rodio)
+│   │   ├── model.rs                # Whisper model downloader (local feature)
+│   │   └── transcriber.rs          # LocalTranscriber wrapper (local feature)
+│   ├── dist/                       # Distribution files
+│   ├── Cargo.toml                  # Dependencies + [features] config
+│   └── README.md                   # Usage instructions
 ├── docs/
-│   └── project/                # Project documentation (you are here)
-├── models/                     # Whisper GGML models (gitignored)
-├── package.json
-├── tsconfig.json
-└── vite.config.ts
+│   └── project/                    # This documentation
+├── roadmap_fv.md                   # Active development roadmap
+└── tasks_fv.md                     # Granular technical task checklist
 ```
 
 ---
 
-## 5. Key Development Workflows
+## 5. Feature Flags
 
-### Adding a Tauri Command (Rust → Frontend IPC)
+The app uses Cargo feature flags to compile in local or cloud mode:
 
-1. Define the command in Rust:
-
-```rust
-// src-tauri/src/main.rs
-#[tauri::command]
-fn get_transcription_history() -> Vec<HistoryEntry> {
-    history::get_recent(50)
-}
+```toml
+[features]
+default = ["local"]
+local = ["dep:whisper-rs"]    # Local Whisper inference
+openai = []                    # OpenAI API cloud transcription
 ```
 
-2. Register it in the Tauri builder:
+> **Important:** `local` and `openai` are mutually exclusive. Build with only one at a time.
 
-```rust
-tauri::Builder::default()
-    .invoke_handler(tauri::generate_handler![get_transcription_history])
-```
+---
 
-3. Call from the frontend:
+## 6. Key Development Workflows
 
-```typescript
-import { invoke } from '@tauri-apps/api/core';
+### Adding a New Config Field
 
-const history = await invoke<HistoryEntry[]>('get_transcription_history');
-```
+1. Add the field to `AppConfig` struct in `config.rs`.
+2. Set a default in `impl Default for AppConfig`.
+3. Access via `config.field_name` in `main.rs`.
+4. Update `config.toml` template in `dist/`.
 
 ### Testing Audio Capture
 
 ```powershell
-# Run a specific Rust test
-cargo test -p fluidvoice -- audio::tests
+cd MVP
+cargo run
+# Press Ctrl+Shift+V to trigger recording
+# Check recording.wav is generated
 ```
 
-### Running All Tests
+### Running Checks
 
 ```powershell
-# Backend tests
-cargo test -p fluidvoice
+cd MVP
 
-# Frontend tests
-npm test
+# Type checking
+cargo check
+
+# Lint
+cargo clippy
+
+# Both builds
+cargo check --features local
+cargo check --no-default-features --features openai
 ```
 
 ---
 
-## 6. Coding Standards
+## 7. Coding Standards
 
 ### Rust
 
 - Follow standard Rust conventions (`rustfmt`, `clippy`).
-- Use `thiserror` for error types; avoid `unwrap()` in production paths.
-- Async operations use `tokio` runtime.
-- All Win32 API calls go through the `windows` crate, wrapped in safe Rust.
-
-### TypeScript / React
-
-- Use functional components with hooks.
-- State management via React Context or Zustand (TBD).
-- Styles in CSS Modules or vanilla CSS (no Tailwind unless decided otherwise).
+- Use `anyhow::Result` for error propagation.
+- Avoid `unwrap()` in production paths — use `?` or `.context()`.
+- Feature-gated code uses `#[cfg(feature = "local")]` / `#[cfg(feature = "openai")]`.
 
 ### General
 
 - Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/).
-- Feature branches off `main`; PRs required for merge.
-- All new features need at least basic test coverage.
+- All sensitive data (API keys, `.env`) is gitignored.
 
 ---
 
-## 7. Debugging Tips
+## 8. Debugging Tips
 
-### Tauri DevTools
+### Console Output (Debug Mode)
 
-Press `F12` in the app window to open Chrome DevTools for the frontend.
-
-### Rust Logging
-
-```rust
-use tracing::{info, warn, error};
-
-info!("Recording started, device: {}", device_name);
-```
-
-Set log level via environment:
+In debug mode, the console window is visible and all `println!` output appears. In release mode, the console is hidden (`windows_subsystem = "windows"`).
 
 ```powershell
-$env:RUST_LOG = "debug"
-cargo tauri dev
+# Debug mode (console visible)
+cargo run
+
+# Release mode (no console — use log files after Phase 4)
+cargo run --release
 ```
 
 ### Common Issues
 
 | Issue | Solution |
 |-------|---------|
-| `whisper-rs` build fails | Ensure Visual Studio Build Tools (C++ workload) is installed |
-| No audio capture | Check Windows Privacy → Microphone settings |
-| Hotkey not working | Run app as Administrator if target app is elevated |
-| Tauri window not transparent | Check `tauri.conf.json` has `"transparent": true` in window config |
-| Model not found at runtime | Ensure model file is in `models/` and path is correct in config |
+| `whisper-rs` build fails | Ensure MSVC Build Tools + CMake are installed |
+| No audio capture | Check Windows Settings → Privacy → Microphone |
+| Hotkey not working | May conflict with other apps using same shortcut |
+| Model download fails | Check internet connection; manually download from Hugging Face |
+| `enigo` typing fails | Some elevated/UWP apps reject simulated keystrokes |
 
 ---
 
-## 8. Useful Links
+## 9. Useful Links
 
 | Resource | URL |
 |----------|-----|
-| Tauri v2 Docs | https://v2.tauri.app |
 | whisper.cpp | https://github.com/ggerganov/whisper.cpp |
 | whisper-rs | https://github.com/tazz4843/whisper-rs |
 | cpal (audio I/O) | https://github.com/RustAudio/cpal |
-| windows crate | https://github.com/microsoft/windows-rs |
+| enigo (keyboard sim) | https://github.com/enigo-rs/enigo |
+| rdev (global hotkeys) | https://github.com/Narsil/rdev |
 | Conventional Commits | https://www.conventionalcommits.org |

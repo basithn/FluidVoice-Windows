@@ -16,7 +16,7 @@ FluidVoice macOS relies on three speech recognition engines:
 
 ### Primary Engine: **Whisper via whisper.cpp**
  
- > **Status:** ✅ Implemented in MVP (Phase 3).
+ > **Status:** ✅ Implemented in MVP (Phase 3). Both local Whisper (`whisper-rs`) and OpenAI cloud (`reqwest`) modes are available as separate feature-flag builds.
  
  Whisper is the only engine from the macOS version that works cross-platform. We will use `whisper-rs` (Rust bindings to whisper.cpp) as the primary and default ASR engine.
 
@@ -83,27 +83,32 @@ Strategy:
 
 ## 4. Audio Pipeline
 
+> **Status:** ✅ Implemented. Audio capture, mono conversion, and resampling are working. Linear interpolation resampler is used (upgrade to `rubato` is parked).
+
 ```
 Microphone
     │
     ▼
-WASAPI Capture (via cpal)
-    │  16-bit PCM, 16 kHz, mono
-    ▼
-Ring Buffer (in memory)
+WASAPI Capture (via cpal) — native sample rate, multi-channel
     │
-    │  [hotkey released → flush]
     ▼
-whisper-rs inference (dedicated thread)
+to_mono() — channel mixdown
+    │
+    ▼
+resample() — linear interpolation to 16 kHz
+    │
+    ▼
+save_to_wav() — 16-bit PCM, debug artifact
+    │
+    ├── [local]  → whisper-rs inference (in-process)
+    │
+    └── [openai] → reqwest POST to OpenAI /v1/audio/transcriptions
     │
     ▼
 Transcribed text (UTF-8 string)
     │
     ▼
-[Optional: AI post-processing]
-    │
-    ▼
-Typing service → focused app
+type_text() via enigo → focused app
 ```
 
 ### Audio Format Requirements
@@ -125,7 +130,7 @@ Typing service → focused app
 | Normal dictation | `base.en` | GPU (CUDA) | 10 s | < 1 s |
 | Normal dictation | `small.en` | CPU, i7/Ryzen 7 | 10 s | < 6 s |
 
-These targets should be validated during Phase 1 development.
+These targets were validated during Phase 1. Actual latencies meet targets on tested hardware (i7-12th gen).
 
 ---
 
@@ -142,9 +147,10 @@ Parakeet TDT v3 (on macOS) offers higher accuracy than Whisper `base` with simil
 
 ## 7. Open Questions
 
-| # | Question | Impact | Decision Needed By |
-|---|----------|--------|--------------------|
-| 1 | Should we support streaming transcription (real-time partial results)? | UX improvement; significant implementation effort | Phase 2 |
-| 2 | Should we bundle a tiny model in the installer for zero-download first use? | Better first-run experience; adds ~75 MB to installer | Phase 1 |
-| 3 | Should we support Whisper via Python `faster-whisper` as an alternative engine? | Better perf on some hardware; adds Python dependency | Phase 3 |
-| 4 | Should we support Azure Speech as a paid cloud option? | Useful for enterprise; requires billing/subscription | Phase 4 |
+| # | Question | Impact | Decision Needed By | Status |
+|---|----------|--------|-------------------|--------|
+| 1 | Should we support streaming transcription (real-time partial results)? | UX improvement; significant effort | Future | Open |
+| 2 | Should we bundle a tiny model in the installer? | Better first-run; +75 MB installer | Future | **Decided: No** — auto-download on first run instead |
+| 3 | Should we support `faster-whisper` (Python)? | Better perf on some HW; Python dep | Future | **Parked** |
+| 4 | Should we support Azure Speech as a cloud option? | Enterprise use; billing needed | Future | Open |
+| 5 | How to track transcription accuracy on customer machines? | Quality assurance for deployments | Phase 4–5 | **Planned** — confidence scores + audio quality metrics |

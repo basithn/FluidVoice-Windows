@@ -72,7 +72,42 @@
 ### UX Polish
 - [ ] System Tray Icon (status indicator).
 - [ ] Visual Overlay (recording state).
-- [ ] Auto-updater.
+
+---
+
+## 🔍 Phase 4: Observability & Monitoring (Week 5-6)
+**Goal:** Stop flying blind on customer machines. Diagnose any issue from logs alone.
+
+### Week 5: Structured Logging & Crash Reporting
+- [ ] Replace all `println!`/`eprintln!` with `tracing` crate (JSON structured logs).
+- [ ] Log to file at `%LOCALAPPDATA%\FluidVoice\logs\` with daily rotation.
+- [ ] Add timing instrumentation to `record_audio()`, `transcribe()`, `type_text()`.
+- [ ] Move `stats.json` to `%LOCALAPPDATA%\FluidVoice\` (fix CWD problem).
+- [ ] Enrich `stats.json`: add `app_version`, `os_version`, `machine_id`, `last_error_message`, `avg_transcription_latency_ms`.
+- [ ] Integrate Sentry (`sentry = "0.31"`) for remote crash/panic reporting.
+
+### Week 6: Heartbeat & Diagnostics
+- [ ] Implement heartbeat: periodic HTTP POST with `{ machine_id, version, stats }`.
+- [ ] Add "Export Diagnostics" to system tray menu (zip logs + config + system info).
+- [ ] Add audio quality metrics: RMS volume, peak amplitude, silence ratio.
+- [ ] Add `telemetry_enabled` opt-out toggle in `config.toml`.
+
+---
+
+## 📡 Phase 5: Fleet Operations (Month 3+)
+**Goal:** Proactive fleet management — updates, accuracy, dashboard.
+
+### Auto-Updates
+- [ ] Integrate `self_update = "0.27"` for GitHub Releases auto-update.
+- [ ] Version reporting in heartbeat telemetry.
+
+### Accuracy Intelligence
+- [ ] Log Whisper confidence scores (`exp(avg_logprob)`).
+- [ ] Estimate accuracy via correction detection (post-injection backspace tracking).
+
+### Fleet Dashboard
+- [ ] Deploy backend (Supabase/Cloudflare Workers) for heartbeat ingestion.
+- [ ] Build dashboard: active machines, version distribution, error rates, latency P50/P90.
 
 ---
 
@@ -81,3 +116,10 @@
 - **Accuracy:** > 90% for clear English.
 - **Reliability:** 0 Crashes during normal operation.
 - **Usage:** Beta users type > 500 words/day using tool.
+
+## 📈 Success Metrics (Observability — Phase 4+)
+- **Debuggability:** Any customer issue diagnosable from log files alone.
+- **Crash Visibility:** 100% of panics reported to Sentry within 24 hours.
+- **Fleet Awareness:** Know which version each customer is running.
+- **MTTR:** Mean-time-to-resolution < 1 hour for common issues (bad mic, config error).
+- **Privacy:** Zero transcripts or PII transmitted. Anonymous IDs only.
