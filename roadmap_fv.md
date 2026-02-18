@@ -64,9 +64,10 @@
 **Goal:** Remove dependencies and improve performance.
 
 ### Local AI (Removing OpenAI)
-- [ ] Investigate `whisper.rs` or ONNX Runtime.
-- [ ] Benchmark Local vs Cloud latency.
-- [ ] Ship optional "Offline Mode" (download model).
+- [x] Investigate `whisper.rs` or ONNX Runtime.
+- [x] Ship optional "Offline Mode" (download model).
+- [ ] Benchmark Local vs Cloud latency (Parked).
+- [ ] Tuning & Resampling Quality (Parked).
 
 ### UX Polish
 - [ ] System Tray Icon (status indicator).

@@ -88,26 +88,30 @@ curl -L -o models/ggml-base.en.bin https://huggingface.co/ggerganov/whisper.cpp/
 
 ---
 
-## 3. Running the App
-
-### Development Mode
-
-```powershell
-cargo tauri dev
-```
-
-This will:
-1. Start the Vite dev server (frontend with hot reload)
-2. Build and launch the Tauri app (Rust backend)
-3. Open the app window
-
-### Production Build
-
-```powershell
-cargo tauri build
-```
-
-Output will be in `src-tauri/target/release/bundle/` (MSI and/or EXE installer).
+## 3. Running the App (MVP Walking Skeleton)
+ 
+ This phase is a **pure Rust application** (no Tauri/Frontend yet).
+ 
+ ### Development Mode
+ 
+ ```powershell
+ # Run the Rust binary directly
+ cargo run
+ ```
+ 
+ This will:
+ 1.  Compile the backend.
+ 2.  Download the model (if missing).
+ 3.  Start the system tray (background process).
+ 4.  Listen for `Ctrl+Shift+V`.
+ 
+ ### Production Build
+ 
+ ```powershell
+ cargo build --release
+ ```
+ 
+ Output will be in `target/release/fluidvoice-mvp.exe`.
 
 ---
 

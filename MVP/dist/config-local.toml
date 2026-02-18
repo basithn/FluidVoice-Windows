@@ -1,0 +1,4 @@
+# FluidVoice Configuration (Local Edition)
+hotkey = "Ctrl+Shift+V"
+record_duration_ms = 5000
+# openai_api_key not needed

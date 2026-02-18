@@ -15,8 +15,10 @@ FluidVoice macOS relies on three speech recognition engines:
 ## 2. Chosen Strategy
 
 ### Primary Engine: **Whisper via whisper.cpp**
-
-Whisper is the only engine from the macOS version that works cross-platform. We will use `whisper-rs` (Rust bindings to whisper.cpp) as the primary and default ASR engine.
+ 
+ > **Status:** ✅ Implemented in MVP (Phase 3).
+ 
+ Whisper is the only engine from the macOS version that works cross-platform. We will use `whisper-rs` (Rust bindings to whisper.cpp) as the primary and default ASR engine.
 
 | Aspect | Detail |
 |--------|--------|

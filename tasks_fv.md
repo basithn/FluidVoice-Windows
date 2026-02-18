@@ -112,12 +112,20 @@
   - [x] Configure `#![windows_subsystem = "windows"]` for Release build to hide console.
   - [x] Implement `single-instance` check to prevent duplicates.
 
-## Step 8: Phase 3 - Local Whisper (Planned)
-- [ ] **Engine Replacement**
-  - [ ] Replace `reqwest` (OpenAI) with `whisper` (C++ bindings).
-  - [ ] Implement model downloader (ggml-base.en.bin).
-- [ ] **Performance Tuning**
+## Step 8: Phase 3 - Local Whisper (Implemented)
+- [x] **Engine Replacement**
+  - [x] Replace `reqwest` (OpenAI) with `whisper` (C++ bindings).
+  - [x] Implement model downloader (ggml-base.en.bin).
+  - [x] Implement `src/transcriber.rs` for local inference.
+- [ ] **Performance Tuning** (Parked)
   - [ ] Benchmark transcription time vs. Cloud.
   - [ ] Optimize model loading (keep loaded in memory).
-- [ ] **Offline Capability**
-  - [ ] Verify functionality with network disabled.
+- [x] **Offline Capability**
+  - [x] Verify functionality with network disabled.
+
+## Step 9: Quality Tuning (Parked)
+- [ ] **Resampling**
+  - [ ] Upgrade to `rubato` for better 48kHz -> 16kHz conversion.
+- [ ] **Model Selection**
+  - [ ] Support `small.en` or `medium.en` for better accuracy.
+

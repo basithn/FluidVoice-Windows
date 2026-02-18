@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\basit\PROJECTS\FluidVoice\MVP\temp_cmake_test\CMakeFiles\7d871c12dba4417381db50acb8c9cccc\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{8D1EBD05-3EF4-3EE4-82F5-5F33A38FA58A}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

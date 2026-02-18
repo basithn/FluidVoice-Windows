@@ -12,17 +12,17 @@ Development is organized into **four phases**, progressing from the foundational
 
 | # | Task | Est. | Status |
 |---|------|------|--------|
-| 1.1 | Project scaffolding (Tauri 2 + React + Rust) | 2 days | ☐ |
-| 1.2 | Global hotkey hook (`SetWindowsHookEx`) — press/release events | 3 days | ☐ |
-| 1.3 | Audio capture via WASAPI (`cpal` crate), 16 kHz mono PCM | 3 days | ☐ |
-| 1.4 | Whisper integration (`whisper-rs`), model loading, inference | 5 days | ☐ |
-| 1.5 | Typing service — `SendInput()` Unicode keystrokes | 3 days | ☐ |
-| 1.6 | Session controller — wire hotkey → capture → ASR → type | 3 days | ☐ |
-| 1.7 | System tray icon + basic context menu (Quit, Settings stub) | 2 days | ☐ |
-| 1.8 | Minimal overlay — recording/processing state indicator | 3 days | ☐ |
-| 1.9 | Settings persistence (JSON in `%APPDATA%`) | 1 day | ☐ |
-| 1.10 | Model download on first run | 2 days | ☐ |
-| 1.11 | Phase 1 integration testing | 3 days | ☐ |
+| 1.1 | Project scaffolding (Tauri 2 + React + Rust) | 2 days | ☑ |
+| 1.2 | Global hotkey hook (`SetWindowsHookEx`) — press/release events | 3 days | ☑ |
+| 1.3 | Audio capture via WASAPI (`cpal` crate), 16 kHz mono PCM | 3 days | ☑ |
+| 1.4 | Whisper integration (`whisper-rs`), model loading, inference | 5 days | ☑ |
+| 1.5 | Typing service — `SendInput()` Unicode keystrokes | 3 days | ☑ |
+| 1.6 | Session controller — wire hotkey → capture → ASR → type | 3 days | ☑ |
+| 1.7 | System tray icon + basic context menu (Quit, Settings stub) | 2 days | ☑ |
+| 1.8 | Minimal overlay — recording/processing state indicator | 3 days | ☑ |
+| 1.9 | Settings persistence (JSON in `%APPDATA%`) | 1 day | ☑ |
+| 1.10 | Model download on first run | 2 days | ☑ |
+| 1.11 | Phase 1 integration testing | 3 days | ☑ |
 
 **Milestone**: `v0.1.0` — "Hold key → speak → text appears in Notepad/VS Code/Chrome"
 

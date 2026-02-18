@@ -33,15 +33,15 @@
 ## 3. Core Features
 
 ### 3.1 Voice Dictation (MVP — must ship in v1)
-
-| ID | Feature | Description | Priority |
-|----|---------|-------------|----------|
-| F-01 | **Global Push-to-Talk** | Configurable hotkey (e.g. `CapsLock`, `Right Ctrl`). Hold to record, release to transcribe. | P0 |
-| F-02 | **On-device ASR** | Whisper-based transcription running locally. Model size selectable (tiny → large). | P0 |
-| F-03 | **Type into Focused App** | Transcribed text is injected as synthetic keystrokes into the currently focused window/control. | P0 |
-| F-04 | **System Tray Presence** | App lives in the system tray with status icon, context menu (Settings, Quit, etc.). | P0 |
-| F-05 | **Overlay Feedback** | Lightweight overlay showing recording state, transcription progress, and result preview. | P0 |
-| F-06 | **Audio Input Selection** | Choose microphone / input device from settings. | P1 |
+ 
+| ID | Feature | Description | Priority | Status |
+|----|---------|-------------|----------|--------|
+| F-01 | **Global Push-to-Talk** | Configurable hotkey (e.g. `CapsLock`, `Right Ctrl`). Hold to record, release to transcribe. | P0 | ✅ Implemented |
+| F-02 | **On-device ASR** | Whisper-based transcription running locally. Model size selectable (tiny → large). | P0 | ✅ Implemented |
+| F-03 | **Type into Focused App** | Transcribed text is injected as synthetic keystrokes into the currently focused window/control. | P0 | ✅ Implemented |
+| F-04 | **System Tray Presence** | App lives in the system tray with status icon, context menu (Settings, Quit, etc.). | P0 | ✅ Implemented |
+| F-05 | **Overlay Feedback** | Lightweight overlay showing recording state, transcription progress, and result preview. | P0 | ⚠️ Audio-only |
+| F-06 | **Audio Input Selection** | Choose microphone / input device from settings. | P1 | ⚠️ Config Only |
 
 ### 3.2 AI Enhancement
 

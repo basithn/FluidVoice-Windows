@@ -61,11 +61,11 @@ This document tracks known risks, their likelihood, potential impact, and mitiga
 | Field | Detail |
 |-------|--------|
 | **Description** | `whisper.cpp` is under active development; API changes could break `whisper-rs` bindings. |
-| **Likelihood** | Medium |
-| **Impact** | Medium — blocks ASR until fixed |
-| **Mitigation** | (1) Pin specific versions of `whisper-rs` and `whisper.cpp`. (2) Monitor releases and test upgrades in isolation. (3) Keep a last-known-good version. |
-| **Owner** | TBD |
-| **Status** | Open |
+| **Likelihood** | High (Occurred v0.12 -> v0.15) |
+| **Impact** | Medium — required code refactor |
+| **Mitigation** | (1) Pin `whisper-rs` version. (2) Monitor releases. (3) **Status:** Mitigated in MVP (Pinned v0.15). |
+| **Owner** | Basit |
+| **Status** | **Monitoring** |
 
 ---
 

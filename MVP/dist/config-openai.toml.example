@@ -1,0 +1,4 @@
+# FluidVoice Configuration (OpenAI Edition)
+hotkey = "Ctrl+Shift+U"
+record_duration_ms = 5000
+openai_api_key = "YOUR_OPENAI_API_KEY_HERE"

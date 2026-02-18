@@ -12,6 +12,12 @@ Instant voice-to-text dictation for any Windows application. Now runs in the bac
 6.  **Hear** a "Beep-Beep" sound (Recording Stopped).
 7.  **Text appears** in your active window!
 
+## 📋 System Requirements
+- **Windows 10/11**
+- **Visual Studio 2022 C++ Build Tools** (Required for compilation)
+- **CMake** (Required for build)
+- **Internet** (First run only, to download model)
+
 ## 🛑 How to Quit
 
 Since the app runs in the background:
@@ -29,11 +35,13 @@ record_duration_ms = 5000 # Duration in milliseconds (e.g. 10000 for 10s)
 # openai_api_key = "sk-..." # Optional: set your API key here
 ```
 
-## 🔑 API Key
+## 🔑 API Key (Optional)
 
-FluidVoice MVP uses OpenAI's Whisper API. You need to provide an API key either:
-- In `config.toml` (recommended)
-- Or by creating a `.env` file with `OPENAI_API_KEY=sk-...`
+FluidVoice MVP now uses **Local Whisper** by default (Offline).
+- On first run, it downloads the model (~140MB).
+- **No API Key required!**
+
+(Legacy: OpenAI support is currently disabled in code, but can be re-enabled for higher accuracy).
 
 ## 📊 Statistics
 

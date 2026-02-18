@@ -23,7 +23,13 @@ ctrlc = "3.4" # Week 4: Graceful shutdown
 tray-item = "0.10"
 rodio = "0.18" # Audio playback
 single-instance = "0.3" # prevent multiple copies
+whisper-rs = { version = "0.15.1", optional = true }
 # image = "0.24" # Not needed for tray-item if using resource/data? Keep for now just in case
+ 
+ [features]
+ default = ["local"]
+ local = ["dep:whisper-rs"]
+ openai = []
 
 
 

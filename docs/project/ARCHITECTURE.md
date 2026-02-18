@@ -1,14 +1,16 @@
 # Architecture & Technology Decisions
 
 ## 1. High-Level Architecture
-
-FluidVoice for Windows is a **desktop application** composed of four main layers:
-
-```
-┌──────────────────────────────────────────────────────┐
-│                    Presentation                      │
-│   System Tray  ·  Overlay Window  ·  Settings UI     │
-├──────────────────────────────────────────────────────┤
+ 
+ > **Current Status (MVP):** Use "Application Core" + "Services" + "System Tray". The "Presentation (Overlay/Settings)" layer is not yet implemented (Phase 4 target).
+ 
+ FluidVoice for Windows is a **desktop application** composed of four main layers:
+ 
+ ```
+ ┌──────────────────────────────────────────────────────┐
+ │             Presentation (Future Tauri)              │
+ │      Overlay Window  ·  Settings UI                  │
+ ├──────────────────────────────────────────────────────┤
 │                  Application Core                    │
 │   Hotkey Manager · Session Controller · History DB   │
 ├──────────────────────────────────────────────────────┤

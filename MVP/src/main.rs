@@ -4,6 +4,10 @@ mod config;
 mod telemetry;
 mod tray;
 mod audio_feedback;
+#[cfg(feature = "local")]
+mod model;       
+#[cfg(feature = "local")]
+mod transcriber;
 
 use anyhow::{anyhow, Context, Result};
 use colored::*;
@@ -15,7 +19,8 @@ use single_instance::SingleInstance;
 use std::sync::{Arc, Mutex};
 use std::sync::mpsc;
 use std::thread;
-use std::time::{Duration, Instant};
+// use std::time::{Duration, Instant}; // Instant unused
+use std::time::Duration;
 
 const WHISPER_SAMPLE_RATE: u32 = 16000;
 
@@ -31,22 +36,23 @@ fn main() -> Result<()> {
     let config = config::load_config().unwrap_or_default();
     telemetry::load_stats();
 
-    if let Some(key) = &config.openai_api_key {
-        std::env::set_var("OPENAI_API_KEY", key);
-    } else {
-        dotenv::dotenv().ok();
-    }
+    // 3. Setup AI Engine
+    #[cfg(feature = "local")]
+    let transcriber = {
+        println!("{}", "🧠 Phase 3: Initializing Local AI...".cyan());
+        let model_path = model::ensure_model_exists().context("Model initialization failed")?;
+        Arc::new(transcriber::LocalTranscriber::new(&model_path)?)
+    };
 
-    // 3. Setup Tray & Audio
-    // Note: tray-item relies on the main thread loop on Windows usually?
-    // Actually tray-item spins its own loop in `new` in some versions or hooks into message pump.
-    // Let's keep it alive.
-    let _tray_system = tray::SystemTray::new().ok(); // Ignore tray error for now if icon missing
-
+    #[cfg(feature = "openai")]
+    println!("{}", "☁️ Initializing OpenAI Cloud Mode...".cyan());
+    
+    // 4. Setup Tray & Audio
+    let _tray_system = tray::SystemTray::new().ok(); 
     let audio = Arc::new(audio_feedback::AudioFeedback::new());
     let audio_clone = audio.clone();
 
-    // 4. Setup Hotkey Listener
+    // 5. Setup Hotkey Listener
     let (tx, rx) = mpsc::channel::<()>();
     let modifiers = Arc::new(Mutex::new(Modifiers::default()));
     let modifiers_clone = modifiers.clone();
@@ -69,12 +75,16 @@ fn main() -> Result<()> {
         }
     });
 
-    println!("{}", "🎤 FluidVoice MVP — Phase 2".bright_green().bold());
+    println!("{}", "🎤 FluidVoice MVP".bright_green().bold());
+    #[cfg(feature = "local")]
+    println!("Mode: LOCAL Whispher");
+    #[cfg(feature = "openai")]
+    println!("Mode: CLOUD OpenAI");
+
     println!("Background Mode Active. Check System Tray.");
 
-    // 5. Main Loop
+    // 6. Main Loop
     loop {
-        // We just wait for hotkey trigger
         match rx.recv() {
             Ok(_) => {
                 println!("\n{} Hotkey detected!", "⚡".yellow());
@@ -82,11 +92,19 @@ fn main() -> Result<()> {
                 
                 let config_duration = config.record_duration_ms;
                 let ac = audio_clone.clone();
-                // We run pipeline in THIS thread (it blocks tray interaction? maybe)
-                // If tray provides "Quit", that runs in a separate callback thread usually.
-                // So blocking main thread here is mostly fine for MVP.
-                
-                match run_pipeline(config_duration) {
+
+                #[cfg(feature = "local")]
+                let t_clone = transcriber.clone();
+
+                // Build conditional arguments for pipeline
+                let pipeline_result = {
+                    #[cfg(feature = "local")]
+                    { run_pipeline(config_duration, t_clone) }
+                    #[cfg(feature = "openai")]
+                    { run_pipeline(config_duration, config.openai_api_key.clone()) }
+                };
+
+                match pipeline_result {
                     Ok(_) => ac.play_stop(),
                     Err(e) => {
                         eprintln!("\n{} Pipeline error: {}", "✗".red(), e);
@@ -103,8 +121,6 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-// ... Modifiers, run_pipeline helpers ...
-
 #[derive(Default)]
 struct Modifiers {
     ctrl: bool,
@@ -114,29 +130,52 @@ struct Modifiers {
 impl Modifiers {
     fn update(&mut self, event: &Event) {
         match event.event_type {
-            EventType::KeyPress(key) => match key {
-                Key::ControlLeft | Key::ControlRight => self.ctrl = true,
-                Key::ShiftLeft | Key::ShiftRight => self.shift = true,
-                _ => {}
-            },
-            EventType::KeyRelease(key) => match key {
-                Key::ControlLeft | Key::ControlRight => self.ctrl = false,
-                Key::ShiftLeft | Key::ShiftRight => self.shift = false,
-                _ => {}
-            },
+            EventType::KeyPress(Key::ControlLeft) | EventType::KeyPress(Key::ControlRight) => self.ctrl = true,
+            EventType::KeyRelease(Key::ControlLeft) | EventType::KeyRelease(Key::ControlRight) => self.ctrl = false,
+            EventType::KeyPress(Key::ShiftLeft) | EventType::KeyPress(Key::ShiftRight) => self.shift = true,
+            EventType::KeyRelease(Key::ShiftLeft) | EventType::KeyRelease(Key::ShiftRight) => self.shift = false,
             _ => {}
         }
     }
 }
 
-fn run_pipeline(duration_ms: u64) -> Result<()> {
+// Conditional Pipeline Logic
+#[cfg(feature = "local")]
+fn run_pipeline(duration_ms: u64, transcriber: Arc<transcriber::LocalTranscriber>) -> Result<()> {
     println!("{} Recording...", "⏺".red());
-
     let (samples, device_sample_rate, device_channels) = record_audio(duration_ms)?;
-    
-    // Telemetry: Audio collected
     telemetry::record_usage(duration_ms as f64 / 1000.0);
 
+    // Resample for Whisper (16kHz)
+    let mono_samples = to_mono(&samples, device_channels as usize);
+    let resampled = if device_sample_rate != WHISPER_SAMPLE_RATE {
+        resample(&mono_samples, device_sample_rate, WHISPER_SAMPLE_RATE)
+    } else {
+        mono_samples
+    };
+
+    // Debug save
+    let _ = save_to_wav(&resampled, WHISPER_SAMPLE_RATE)?;
+    
+    println!("{} Transcribing (Local)...", "🧠".magenta());
+    let transcript = transcriber.transcribe(&resampled)?;
+    
+    println!("{} Typing...", "⌨".green());
+    type_text(&transcript)?;
+    println!("{} Done!", "✓".green());
+    Ok(())
+}
+
+#[cfg(feature = "openai")]
+fn run_pipeline(duration_ms: u64, api_key: Option<String>) -> Result<()> {
+    println!("{} Recording...", "⏺".red());
+    let (samples, device_sample_rate, device_channels) = record_audio(duration_ms)?;
+    telemetry::record_usage(duration_ms as f64 / 1000.0);
+
+    // For OpenAI, we need a WAV file.
+    // We can use the raw capture rate or resample. 
+    // Let's us raw capture rate to save processing (OpenAI handles it).
+    // Or stick to 16kHz for consistency. Let's use 16kHz.
     let mono_samples = to_mono(&samples, device_channels as usize);
     let resampled = if device_sample_rate != WHISPER_SAMPLE_RATE {
         resample(&mono_samples, device_sample_rate, WHISPER_SAMPLE_RATE)
@@ -146,15 +185,39 @@ fn run_pipeline(duration_ms: u64) -> Result<()> {
 
     let wav_path = save_to_wav(&resampled, WHISPER_SAMPLE_RATE)?;
     
-    println!("{} Transcribing...", "↻".yellow());
-    let transcript = transcribe_openai(&wav_path)?;
-    
+    println!("{} Transcribing (Cloud)...", "☁️".blue());
+    let key = api_key.ok_or_else(|| anyhow!("OpenAI API Key not found in config or env"))?;
+    let transcript = transcribe_openai(&wav_path, &key)?;
+
     println!("{} Typing...", "⌨".green());
     type_text(&transcript)?;
-    
     println!("{} Done!", "✓".green());
-
     Ok(())
+}
+
+#[cfg(feature = "openai")]
+fn transcribe_openai(file_path: &str, api_key: &str) -> Result<String> {
+    use reqwest::blocking::multipart;
+    
+    let client = reqwest::blocking::Client::new();
+    let form = multipart::Form::new()
+        .file("file", file_path)?
+        .text("model", "whisper-1");
+
+    let res = client.post("https://api.openai.com/v1/audio/transcriptions")
+        .header("Authorization", format!("Bearer {}", api_key))
+        .multipart(form)
+        .send()
+        .context("Failed to connect to OpenAI")?;
+
+    if !res.status().is_success() {
+        let error_text = res.text().unwrap_or_default();
+        return Err(anyhow!("OpenAI API Error: {}", error_text));
+    }
+
+    let json: serde_json::Value = res.json()?;
+    let text = json["text"].as_str().unwrap_or("").to_string();
+    Ok(text)
 }
 
 fn type_text(text: &str) -> Result<()> {
@@ -248,18 +311,4 @@ fn save_to_wav(samples: &[f32], sample_rate: u32) -> Result<String> {
     }
     writer.finalize()?;
     Ok(path.to_string())
-}
-
-fn transcribe_openai(wav_path: &str) -> Result<String> {
-    let api_key = std::env::var("OPENAI_API_KEY").context("OPENAI_API_KEY missing")?;
-    let client = reqwest::blocking::Client::builder().timeout(Duration::from_secs(30)).build()?;
-    let form = reqwest::blocking::multipart::Form::new()
-        .file("file", wav_path)?
-        .text("model", "whisper-1")
-        .text("response_format", "json");
-    let response = client.post("https://api.openai.com/v1/audio/transcriptions")
-        .bearer_auth(&api_key).multipart(form).send()?;
-    if !response.status().is_success() { return Err(anyhow!("OpenAI error: {}", response.status())); }
-    let json: serde_json::Value = response.json()?;
-    json["text"].as_str().map(|s| s.to_string()).ok_or_else(|| anyhow!("No 'text' field"))
 }

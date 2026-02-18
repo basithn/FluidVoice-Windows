@@ -43,6 +43,8 @@ MVP/dist/recording.wav
 !package.json
 !tsconfig.json
 !MVP/dist/config.toml # Keep templates
+MVP/dist/config-openai.toml
+
 
 # Ignore specific downloaded versions
 FluidVoice-1.5.5/

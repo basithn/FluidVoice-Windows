@@ -1,0 +1,2 @@
+C:/Users/basit/PROJECTS/FluidVoice/MVP/temp_cmake_test/CMakeFiles/ALL_BUILD.dir
+C:/Users/basit/PROJECTS/FluidVoice/MVP/temp_cmake_test/CMakeFiles/ZERO_CHECK.dir
